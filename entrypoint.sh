@@ -1,18 +1,20 @@
 #!/bin/sh
 set -eu
 
-# Ensure instance dir exists
 mkdir -p /kerkoapp/instance
 
-# If Render secret file exists, copy it into the place Kerko expects
 if [ -f /etc/secrets/.secrets.toml ]; then
   cp /etc/secrets/.secrets.toml /kerkoapp/instance/.secrets.toml
   chmod 600 /kerkoapp/instance/.secrets.toml || true
 fi
 
-: "${PORT:=80}"
+# Render provides PORT; default locally
+: "${PORT:=10000}"
 
-flask kerko sync || true
+# Start sync in background so Render sees an open port quickly
+(
+  flask kerko sync || true
+) &
 
 exec gunicorn \
   --bind 0.0.0.0:"$PORT" \
