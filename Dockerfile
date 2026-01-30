@@ -1,13 +1,9 @@
-FROM python:3.11
+FROM whiskyechobravo/kerkoapp:latest
 
-LABEL maintainer="kerko@whiskyechobravo.com" \
-      org.opencontainers.image.source="https://github.com/whiskyechobravo/kerkoapp" \
-      org.opencontainers.image.url="https://hub.docker.com/repository/docker/whiskyechobravo/kerkoapp"
+# Optional: add a tiny entrypoint for periodic sync.
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
-WORKDIR /kerkoapp
-COPY . /kerkoapp
-
-RUN pip install --no-cache-dir --trusted-host pypi.python.org -r /kerkoapp/requirements/docker.txt
-RUN for LOCALE in $(find kerkoapp/translations/* -maxdepth 0 -type d -exec basename "{}" \;); do pybabel compile -l $LOCALE -d kerkoapp/translations; done
-
-CMD ["gunicorn", "--threads", "4", "--log-level", "info", "--error-logfile", "-", "--access-logfile", "-", "--worker-tmp-dir", "/dev/shm", "--graceful-timeout", "120", "--timeout", "120", "--keep-alive", "5", "--bind", "0.0.0.0:80", "wsgi:app"]
+# Render/Fly often require binding to PORT; KerkoApp image binds to 80 by default.
+# We'll keep the container listening on 80 and let the platform route to it.
+CMD ["/entrypoint.sh"]
