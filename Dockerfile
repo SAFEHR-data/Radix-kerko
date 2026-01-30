@@ -1,7 +1,7 @@
 FROM whiskyechobravo/kerkoapp:latest
 
 # Move config over
-COPY instance/config.toml /kerkoapp/instance/config.toml
+COPY instance/config.toml /kerkoapp/config.toml
 
 # Optional: add a tiny entrypoint for periodic sync.
 COPY entrypoint.sh /entrypoint.sh

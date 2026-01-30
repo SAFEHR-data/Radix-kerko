@@ -8,6 +8,11 @@ if [ -f /etc/secrets/.secrets.toml ]; then
   chmod 600 /kerkoapp/instance/.secrets.toml || true
 fi
 
+# Populate instance config if missing
+if [ ! -f /kerkoapp/instance/config.toml ] && [ -f /kerkoapp/config.toml ]; then
+  cp /kerkoapp/config.toml /kerkoapp/instance/config.toml
+fi
+
 # Render provides PORT; default locally
 : "${PORT:=10000}"
 
