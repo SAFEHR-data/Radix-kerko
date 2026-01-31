@@ -1,17 +1,17 @@
 #!/bin/sh
-set -eu
+set -e
 
 mkdir -p /kerkoapp/instance
 
-# Copy Render secret file into Kerko instance (runtime)
+# Always refresh secrets from Render secret file if present
 if [ -f /etc/secrets/.secrets.toml ]; then
-  cp /etc/secrets/.secrets.toml /kerkoapp/instance/.secrets.toml
+  cp -f /etc/secrets/.secrets.toml /kerkoapp/instance/.secrets.toml
   chmod 600 /kerkoapp/instance/.secrets.toml || true
 fi
 
-# Populate instance config if missing (supports volume-masked instance dir)
-if [ ! -f /kerkoapp/instance/config.toml ] && [ -f /kerkoapp/config.toml ]; then
-  cp /kerkoapp/config.toml /kerkoapp/instance/config.toml
+# Always refresh config from baked-in config if present
+if [ -f /kerkoapp/config.toml ]; then
+  cp -f /kerkoapp/config.toml /kerkoapp/instance/config.toml
 fi
 
 : "${PORT:=10000}"
