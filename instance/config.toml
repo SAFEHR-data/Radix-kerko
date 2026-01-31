@@ -11,7 +11,7 @@ BABEL_DEFAULT_TIMEZONE = "UTC"
 
 [kerko.features]
 
-download_attachment_new_window = false
+download_attachment_new_window = true
 download_item = true
 download_results = true
 download_results_max_count = 0
@@ -37,7 +37,7 @@ max_days = 0
 
 [kerko.meta]
 
-title = "KerkoApp"
+title = "RADIX Bibliography"
 highwirepress_tags = true
 google_analytics_id = ""
 
@@ -48,7 +48,7 @@ pager_links = 4
 
 [kerko.breadcrumb]
 
-enabled = true
+enabled = false
 include_current = true
 text_max_length = 50
 text_max_length_leeway = 10
@@ -56,28 +56,13 @@ text_max_length_leeway = 10
 [kerko.link_groups]
 
     [[kerko.link_groups.navbar]]
-    text = "My Bibliography"
-    type = "endpoint"
-    endpoint = "kerko.search"
-
-    [[kerko.link_groups.breadcrumb_base]]
-    text = "My Organization"
+    text = "Book of RADIX"
     type = "url"
-    url = "http://example.com"
-
-    [[kerko.link_groups.breadcrumb_base]]
-    text = "My Project"
-    type = "url"
-    url = "http://example.com/project"
-
-    [[kerko.link_groups.breadcrumb_base]]
-    text = "My Bibliography"
-    type = "endpoint"
-    endpoint = "kerko.search"
+    url = "https://radix.antibiotics.help"
 
 [kerko.zotero]
 
-csl_style = "apa"
+csl_style = "chicago-notes-bibliography"
 locale = "en-US"
 item_include_re = ''
 item_exclude_re = ''
@@ -95,7 +80,7 @@ whoosh_language = "en"
 [kerko.facets]
 
     [kerko.facets.tag]
-    enabled = true
+    enabled = false
     weight = 100
     initial_limit = 10
     initial_limit_leeway = 2
@@ -116,7 +101,7 @@ whoosh_language = "en"
     sort_by = ["label"]
 
     [kerko.facets.language]
-    enabled = true
+    enabled = false
     weight = 320
     initial_limit = 10
     initial_limit_leeway = 2
@@ -132,12 +117,12 @@ whoosh_language = "en"
     sort_by = ["label"]
 
     # This shows how a collection-based facet might be configured.
-    [kerko.facets.my_custom_facet]
-    enabled = false  # No effect unless this is set to true.
+    [kerko.facets.book_of_radix]
+    enabled = true  # No effect unless this is set to true.
     type = "collection"
-    collection_key = "AAAAAAAA"
-    filter_key = "my_custom_facet"
-    title = "My custom facet"
+    collection_key = "I28JHYME"
+    filter_key = "book_of_radix"
+    title = "Book of RADIX"
     weight = 50
     initial_limit = 10
     initial_limit_leeway = 2

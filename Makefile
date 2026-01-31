@@ -4,6 +4,13 @@ PORT := 10000
 build:
 	docker build -t $(IMAGE) .
 
+index:
+	docker build -t $(IMAGE) . ; \
+	docker run --rm \
+  	-v $$PWD/instance:/kerkoapp/instance \
+  	$(IMAGE) \
+  	sh -lc 'flask kerko clean index && flask kerko sync index'
+
 sync:
 	docker run --rm \
   	-v $$PWD/instance:/kerkoapp/instance \
