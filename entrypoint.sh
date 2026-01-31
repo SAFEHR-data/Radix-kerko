@@ -16,6 +16,11 @@ fi
 
 : "${PORT:=10000}"
 
+# Optional sync on start (disabled by default)
+if [ "${KERKO_SYNC_ON_START:-0}" = "1" ]; then
+  flask kerko sync || true
+fi
+
 exec gunicorn \
   --bind 0.0.0.0:"$PORT" \
   --threads 4 \
